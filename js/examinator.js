@@ -9,7 +9,6 @@ var Examinator = function() {
     this.allowedAnswerTables = null;
 };
 
-// Romaji table.
 Examinator.prototype.tableRomaji = ["a", "i", "u", "e", "o",
                                "ka", "ki", "ku", "ke", "ko",
                                "sa", "shi", "su", "se", "so",
@@ -21,7 +20,6 @@ Examinator.prototype.tableRomaji = ["a", "i", "u", "e", "o",
                                "ra", "ri", "ru", "re", "ro",
                                "wa",                   "wo"];
 
-// Hiragana table.
 Examinator.prototype.tableHiragana = ["あ", "い", "う", "え", "お",
                                "か", "き", "く", "け", "こ",
                                "さ", "し", "す", "せ", "そ",
@@ -33,7 +31,6 @@ Examinator.prototype.tableHiragana = ["あ", "い", "う", "え", "お",
                                "ら", "り", "る", "れ", "ろ",
                                "わ",                   "を"];
 
-// Katakana table.
 Examinator.prototype.tableKatakana = ["ア", "イ", "ウ", "エ", "オ",
                                "カ", "キ", "ク", "ケ", "コ",
                                "サ", "シ", "ス", "セ", "ソ",
@@ -59,19 +56,16 @@ Examinator.prototype.getSymbol = function(tableNo, symbolNo) {
 };
 
 Examinator.prototype.generateQuestion = function(allowedTables, allowedSymbols) {
-    this.question = _.shuffle(this.descartesMultiply(allowedTables, allowedSymbols))[0];
-    return this.question;
+    return _.shuffle(this.descartesMultiply(allowedTables, allowedSymbols))[0];
 };
 
 Examinator.prototype.generateWrongAnswers = function(allowedTables, allowedSymbols, correctSymbol) {
-    this.wrongAnswers = _.shuffle(this.descartesMultiply(allowedTables, _.without(allowedSymbols, correctSymbol)));
-    return this.wrongAnswers;
+    return _.shuffle(this.descartesMultiply(allowedTables, _.without(allowedSymbols, correctSymbol)));
 };
 
 Examinator.prototype.generateCorrectAnswer = function(allowedTables, correctSymbol, questionTable) {
     var answerTable = _.shuffle(_.without(allowedTables, questionTable))[0];
     var correctAnswer = this.descartesMultiply([answerTable], [correctSymbol]);
-    this.correctAnswer = correctAnswer;
     return correctAnswer[0];
 };
 

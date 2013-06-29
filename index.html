@@ -9,13 +9,19 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <div style="width:50%;margin-left:auto;margin-right:auto;margin-top:5%">
       <h1 style="text-align:center"> Welcome to Civil Kana!</h1>
+      <script>
+        // Note:
+        //  That was a nice application of emacs macroses.
+        //  I had only links with 'mode' parameter, but without 'msg'.
+        //  Then I needed to add 'msg' parameter so it equals to the text of the link (and replace ' ' with '%20' afterwards).
+      </script>
       <a href="anymode.html?mode=quickTestMode" class="btn btn-primary btn-block btn-large" type="button">Quick test</a>
-      <a href="anymode.html?mode=hiragana2romajiMode" class="btn btn-primary btn-block btn-large" type="button">Hiragana to romaji</a>
-      <a href="anymode.html?mode=katakana2romajiMode" class="btn btn-primary btn-block btn-large" type="button">Katakana to romaji</a>
-      <a href="anymode.html?mode=romaji2hiraganaMode" class="btn btn-primary btn-block btn-large" type="button">Romaji to hiragana</a>
-      <a href="anymode.html?mode=romaji2katakanaMode" class="btn btn-primary btn-block btn-large" type="button">Romaji to katakana</a>
-      <a href="anymode.html?mode=hiragana2katakanaMode" class="btn btn-primary btn-block btn-large" type="button">Hiragana to katakana</a>
-      <a href="anymode.html?mode=katakana2hiraganaMode" class="btn btn-primary btn-block btn-large" type="button">Katakana to hiragana</a>
+      <a href="anymode.html?mode=hiragana2romajiMode&msg=Hiragana%20to%20romaji" class="btn btn-primary btn-block btn-large" type="button">Hiragana to romaji</a>
+      <a href="anymode.html?mode=katakana2romajiMode&msg=Katakana%20to%20romaji" class="btn btn-primary btn-block btn-large" type="button">Katakana to romaji</a>
+      <a href="anymode.html?mode=romaji2hiraganaMode&msg=Romaji%20to%20hiragana" class="btn btn-primary btn-block btn-large" type="button">Romaji to hiragana</a>
+      <a href="anymode.html?mode=romaji2katakanaMode&msg=Romaji%20to%20katakana" class="btn btn-primary btn-block btn-large" type="button">Romaji to katakana</a>
+      <a href="anymode.html?mode=hiragana2katakanaMode&msg=Hiragana%20to%20kataka" class="btn btn-primary btn-block btn-large" type="button">Hiragana to katakana</a>
+      <a href="anymode.html?mode=katakana2hiraganaMode&msg=Katakana%20to%20hiraga" class="btn btn-primary btn-block btn-large" type="button">Katakana to hiragana</a>
 
       <a href="#" class="btn btn-primary btn-block btn-large">About</a>
     </div>
