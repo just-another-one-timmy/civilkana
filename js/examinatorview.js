@@ -1,7 +1,7 @@
 var ExaminatorView = function() {
 };
 
-ExaminatorView.prototype.VARIANTS_COUNT = 8;
+ExaminatorView.prototype.VARIANTS_COUNT = 10;
 
 ExaminatorView.prototype.DELAY_BEFORE_NEXT_GUESS = 500;
 
