@@ -1,0 +1,5 @@
+quickTest();
+
+var quickTest = function() {
+    alert('heyhey')
+};
