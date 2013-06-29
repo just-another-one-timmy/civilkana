@@ -1,4 +1,8 @@
 var Examinator = function() {
+    this.question = null;
+    this.allowedQuestionTables = null;
+    this.allowedQuestionSymbols = null;
+    this.allowedAnswerTables = null;
 };
 
 // Romaji table.
@@ -41,8 +45,56 @@ Examinator.prototype.tables = [Examinator.prototype.tableRomaji,
                                Examinator.prototype.tableHiragana,
                                Examinator.prototype.tableKatakana];
 
-Examinator.prototype.SYMBOLS_COUNT = Examinator.prototype.tables[0].length;
+Examinator.prototype.getSymbolsCount = function() {
+    return this.tables[0].length;
+};
 
+// Retrieves symbol from given table by number.
 Examinator.prototype.getSymbol = function(tableNo, symbolNo) {
     return this.tables[tableNo][symbolNo];
+};
+
+Examinator.prototype.generateQuestion = function(allowedTables, allowedSymbols) {
+    this.question = _.shuffle(this.descartesMultiply(allowedTables, allowedSymbols))[0];
+    return this.question;
+};
+
+Examinator.prototype.generateWrongAnswers = function(allowedTables, allowedSymbols, correctSymbol) {
+    this.wrongAnswers = _.shuffle(this.descartesMultiply(allowedTables, _.without(allowedSymbols, correctSymbol)));
+    return this.wrongAnswers;
+};
+
+Examinator.prototype.generateCorrectAnswer = function(allowedTables, correctSymbol, questionTable) {
+    var answerTable = _.shuffle(_.without(allowedTables, questionTable))[0];
+    var correctAnswer = this.descartesMultiply([answerTable], [correctSymbol]);
+    this.correctAnswer = correctAnswer;
+    return correctAnswer[0];
+};
+
+Examinator.prototype.quickTestMode = function() {
+    this.allowedQuestionTables = _.range(0, this.tables.length);
+    this.allowedQuestionSymbols = _.range(0, this.getSymbolsCount());
+    this.allowedAnswerTables = _.range(0, this.tables.length);
+};
+
+Examinator.prototype.hiraganaToRomajiMode = function() {
+    // Hiragana table.
+    this.allowedQuestionTables = [1];
+    // All symbols.
+    this.allowedQuestionSymbols = _.range(0, this.getSymbolsCount());
+    // Romaji table.
+    this.allowedAnswerTables = [0];
+};
+
+Examinator.prototype.descartesMultiply = function(list1, list2) {
+    return _.flatten(_.map(list1,
+                           function(item1) {
+                               return _.map(list2,
+                                            function(item2) {
+                                                return {
+                                                    a: item1,
+                                                    b: item2
+                                                };
+                                            });
+                           }));
 };

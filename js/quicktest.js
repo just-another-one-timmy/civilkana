@@ -7,8 +7,9 @@ QuickTest.prototype.DELAY_BEFORE_NEXT_GUESS = 500;
 
 QuickTest.prototype.start = function() {
     this.ex = new Examinator();
+    this.ex.quickTestMode();
     this.clearAnswerButtons();
-    this.guessSymbol();
+    this.askQuestion();
 };
 
 QuickTest.prototype.clearAnswerButtons = function() {
@@ -37,7 +38,7 @@ QuickTest.prototype.addAnswerButtons = function(variants,
                 window.setTimeout(
                     function() {
                         quickTestObject.clearAnswerButtons();
-                        quickTestObject.guessSymbol();
+                        quickTestObject.askQuestion();
                     },
                     quickTestObject.DELAY_BEFORE_NEXT_GUESS);
             } else {
@@ -50,50 +51,36 @@ QuickTest.prototype.showQuestion = function(symbol) {
     $('#question').text(symbol);
 };
 
-// Generates list of candidates for guessing.
-// Guarantees there won't be variants with given symbolNo,
-// so they all will be wrong.
-QuickTest.prototype.generateWrongVariants = function(symbolNo, variantsCount) {
-    var allTables = _.range(this.ex.tables.length);
-    var allSymbols = _.range(this.ex.SYMBOLS_COUNT);
-    var allWrongSymbols = _.without(allSymbols, symbolNo);
-
-    var allWrongPairs = _.flatten(_.map(allTables,
-                              function(tableNo) {
-                                  return _.map(allWrongSymbols,
-                                               function(symbolNo) {
-                                                   return {
-                                                       "tableNo": tableNo,
-                                                       "symbolNo": symbolNo
-                                                   };
-                                               });
-                              }));
-
-    return _.first(_.shuffle(allWrongPairs), variantsCount);
-};
-
-QuickTest.prototype.guessSymbol = function() {
+QuickTest.prototype.askQuestion = function() {
     var ex = this.ex;
-    // Generating symbol that user will be trying to guess.
-    var tableNo = _.random(ex.tables.length - 1);
-    var symbolNo = _.random(ex.SYMBOLS_COUNT - 1);
+    var question = ex.generateQuestion(ex.allowedQuestionTables,
+                                       ex.allowedQuestionSymbols);
+    var wrongAnswers = ex.generateWrongAnswers(
+        ex.allowedAnswerTables,
+        // Allowed answer symbols are the same as allowed
+        // question symbols.
+        ex.allowedQuestionSymbols,
+        // Correct symbol no.
+        question.b);
 
-    this.showQuestion(ex.getSymbol(tableNo, symbolNo));
+    var correctAnswer = ex.generateCorrectAnswer(
+        ex.allowedAnswerTables,
+        question.b,
+        question.a);
 
-    // Generating many wrong variants.
-    var variants = this.generateWrongVariants(symbolNo, this.VARIANTS_COUNT - 1);
-
-    // Adding the only one correct variant.
-    var ansTableNo = _.shuffle(_.without(_.range(ex.tables.length), tableNo))[0];
-    variants.unshift({"tableNo": ansTableNo, "symbolNo": symbolNo});
-
-    variants = _.shuffle(_.map(variants,
+    var variants = _.union([correctAnswer], wrongAnswers);
+    variants = _.first(variants, this.VARIANTS_COUNT);
+    variants = _.shuffle(variants);
+    variants = _.map(variants,
                      function(variant) {
-                         variant.symbol = ex.getSymbol(variant.tableNo, variant.symbolNo);
+                         variant.symbolNo = variant.b;
+                         variant.tableNo = variant.a;
+                         variant.symbol = ex.getSymbol(variant.tableNo, variant.symbolNo)
                          return variant;
-                     }));
+                     });
 
-    this.addAnswerButtons(variants, symbolNo);
+    this.showQuestion(ex.getSymbol(question.a, question.b));
+    this.addAnswerButtons(variants, question.b);
 };
 
 (new QuickTest()).start();
