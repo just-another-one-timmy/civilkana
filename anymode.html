@@ -16,6 +16,18 @@
     <script src="http://underscorejs.org/underscore-min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="js/examinator.js"></script>
-    <script src="js/quicktest.js"></script>
+    <script src="js/examinatorview.js"></script>
+    <script>
+      // This function was taken from
+      // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values
+      function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+
+      (new ExaminatorView()).start(getParameterByName('mode'));
+    </script>
   </body>
 </html>

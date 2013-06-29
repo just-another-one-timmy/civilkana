@@ -1,3 +1,7 @@
+// TODO:
+// - refactor
+// - add dependency injection on modes
+
 var Examinator = function() {
     this.question = null;
     this.allowedQuestionTables = null;
@@ -77,14 +81,20 @@ Examinator.prototype.quickTestMode = function() {
     this.allowedAnswerTables = _.range(0, this.tables.length);
 };
 
-Examinator.prototype.hiraganaToRomajiMode = function() {
-    // Hiragana table.
-    this.allowedQuestionTables = [1];
-    // All symbols.
-    this.allowedQuestionSymbols = _.range(0, this.getSymbolsCount());
-    // Romaji table.
-    this.allowedAnswerTables = [0];
+Examinator.prototype.create2TablesMode = function(tableFrom, tableTo) {
+    return function() {
+        this.allowedQuestionTables = [tableFrom];
+        this.allowedQuestionSymbols = _.range(0, this.getSymbolsCount());
+        this.allowedAnswerTables = [tableTo];
+    }
 };
+
+Examinator.prototype.hiragana2romajiMode = Examinator.prototype.create2TablesMode(1, 0);
+Examinator.prototype.romaji2hiraganaMode = Examinator.prototype.create2TablesMode(0, 1);
+Examinator.prototype.katakana2romajiMode = Examinator.prototype.create2TablesMode(2, 0);
+Examinator.prototype.romaji2katakanaMode = Examinator.prototype.create2TablesMode(0, 2);
+Examinator.prototype.hiragana2katakanaMode = Examinator.prototype.create2TablesMode(1, 2);
+Examinator.prototype.katakana2hiraganaMode = Examinator.prototype.create2TablesMode(2, 1);
 
 Examinator.prototype.descartesMultiply = function(list1, list2) {
     return _.flatten(_.map(list1,

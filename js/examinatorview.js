@@ -1,22 +1,22 @@
-var QuickTest = function() {
+var ExaminatorView = function() {
 };
 
-QuickTest.prototype.VARIANTS_COUNT = 8;
+ExaminatorView.prototype.VARIANTS_COUNT = 8;
 
-QuickTest.prototype.DELAY_BEFORE_NEXT_GUESS = 500;
+ExaminatorView.prototype.DELAY_BEFORE_NEXT_GUESS = 500;
 
-QuickTest.prototype.start = function() {
+ExaminatorView.prototype.start = function(mode) {
     this.ex = new Examinator();
-    this.ex.quickTestMode();
+    this.ex[mode]();
     this.clearAnswerButtons();
     this.askQuestion();
 };
 
-QuickTest.prototype.clearAnswerButtons = function() {
+ExaminatorView.prototype.clearAnswerButtons = function() {
     $('#answers').empty();
 };
 
-QuickTest.prototype.addAnswerButtons = function(variants,
+ExaminatorView.prototype.addAnswerButtons = function(variants,
                                                ansSymbolNo) {
     _.each(variants,
            function(variant) {
@@ -47,11 +47,11 @@ QuickTest.prototype.addAnswerButtons = function(variants,
         });
 };
 
-QuickTest.prototype.showQuestion = function(symbol) {
+ExaminatorView.prototype.showQuestion = function(symbol) {
     $('#question').text(symbol);
 };
 
-QuickTest.prototype.askQuestion = function() {
+ExaminatorView.prototype.askQuestion = function() {
     var ex = this.ex;
     var question = ex.generateQuestion(ex.allowedQuestionTables,
                                        ex.allowedQuestionSymbols);
@@ -82,5 +82,3 @@ QuickTest.prototype.askQuestion = function() {
     this.showQuestion(ex.getSymbol(question.a, question.b));
     this.addAnswerButtons(variants, question.b);
 };
-
-(new QuickTest()).start();
