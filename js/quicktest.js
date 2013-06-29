@@ -1,7 +1,7 @@
 var QuickTest = function() {
 };
 
-QuickTest.prototype.VARIANTS_COUNT = 5;
+QuickTest.prototype.VARIANTS_COUNT = 8;
 
 QuickTest.prototype.DELAY_BEFORE_NEXT_GUESS = 500;
 
