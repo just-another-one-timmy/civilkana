@@ -54,7 +54,7 @@ QuickTest.prototype.showQuestion = function(symbol) {
 // Guarantees there won't be variants with given symbolNo,
 // so they all will be wrong.
 QuickTest.prototype.generateWrongVariants = function(symbolNo, variantsCount) {
-    var allTables = _.range(this.ex.TABLES_COUNT);
+    var allTables = _.range(this.ex.tables.length);
     var allSymbols = _.range(this.ex.SYMBOLS_COUNT);
     var allWrongSymbols = _.without(allSymbols, symbolNo);
 
@@ -75,7 +75,7 @@ QuickTest.prototype.generateWrongVariants = function(symbolNo, variantsCount) {
 QuickTest.prototype.guessSymbol = function() {
     var ex = this.ex;
     // Generating symbol that user will be trying to guess.
-    var tableNo = _.random(ex.TABLES_COUNT - 1);
+    var tableNo = _.random(ex.tables.length - 1);
     var symbolNo = _.random(ex.SYMBOLS_COUNT - 1);
 
     this.showQuestion(ex.getSymbol(tableNo, symbolNo));
@@ -84,7 +84,7 @@ QuickTest.prototype.guessSymbol = function() {
     var variants = this.generateWrongVariants(symbolNo, this.VARIANTS_COUNT - 1);
 
     // Adding the only one correct variant.
-    var ansTableNo = _.shuffle(_.without(_.range(ex.TABLES_COUNT), tableNo))[0];
+    var ansTableNo = _.shuffle(_.without(_.range(ex.tables.length), tableNo))[0];
     variants.unshift({"tableNo": ansTableNo, "symbolNo": symbolNo});
 
     variants = _.shuffle(_.map(variants,

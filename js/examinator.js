@@ -2,7 +2,7 @@ var Examinator = function() {
 };
 
 // Romaji table.
-Examinator.prototype.table0 = ["a", "i", "u", "e", "o",
+Examinator.prototype.tableRomaji = ["a", "i", "u", "e", "o",
                                "ka", "ki", "ku", "ke", "ko",
                                "sa", "shi", "su", "se", "so",
                                "ta", "chi", "tsu", "te", "to",
@@ -14,7 +14,7 @@ Examinator.prototype.table0 = ["a", "i", "u", "e", "o",
                                "wa",                   "wo"];
 
 // Hiragana table.
-Examinator.prototype.table1 = ["あ", "い", "う", "え", "お",
+Examinator.prototype.tableHiragana = ["あ", "い", "う", "え", "お",
                                "か", "き", "く", "け", "こ",
                                "さ", "し", "す", "せ", "そ",
                                "た", "ち", "つ", "て", "と",
@@ -26,7 +26,7 @@ Examinator.prototype.table1 = ["あ", "い", "う", "え", "お",
                                "わ",                   "を"];
 
 // Katakana table.
-Examinator.prototype.table2 = ["ア", "イ", "ウ", "エ", "オ",
+Examinator.prototype.tableKatakana = ["ア", "イ", "ウ", "エ", "オ",
                                "カ", "キ", "ク", "ケ", "コ",
                                "サ", "シ", "ス", "セ", "ソ",
                                "タ", "チ", "ツ", "テ", "ト",
@@ -37,14 +37,12 @@ Examinator.prototype.table2 = ["ア", "イ", "ウ", "エ", "オ",
                                "ラ", "リ", "ル", "レ", "ロ",
                                "ワ",                   "ヲ"];
 
-Examinator.prototype.TABLES_COUNT = 3;
+Examinator.prototype.tables = [Examinator.prototype.tableRomaji,
+                               Examinator.prototype.tableHiragana,
+                               Examinator.prototype.tableKatakana];
 
-Examinator.prototype.SYMBOLS_COUNT = Examinator.prototype.table0.length;
-
-Examinator.prototype.getTable = function(tableNo) {
-    return this['table' + tableNo];
-};
+Examinator.prototype.SYMBOLS_COUNT = Examinator.prototype.tables[0].length;
 
 Examinator.prototype.getSymbol = function(tableNo, symbolNo) {
-    return this.getTable(tableNo)[symbolNo];
+    return this.tables[tableNo][symbolNo];
 };
