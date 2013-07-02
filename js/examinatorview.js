@@ -5,9 +5,9 @@ ExaminatorView.prototype.VARIANTS_COUNT = 10;
 
 ExaminatorView.prototype.DELAY_BEFORE_NEXT_GUESS = 500;
 
-ExaminatorView.prototype.start = function(mode) {
+ExaminatorView.prototype.start = function(fromTables, toTables) {
     this.ex = new Examinator();
-    this.ex[mode]();
+    this.ex.generateModeFunction(fromTables, toTables)();
     this.clearAnswerButtons();
     this.askQuestion();
 };

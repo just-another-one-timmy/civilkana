@@ -28,7 +28,7 @@
       }
 
       $('#msg').text(getParameterByName('msg'));
-      (new ExaminatorView()).start(getParameterByName('mode'));
+      (new ExaminatorView()).start(getParameterByName('fromTables'), getParameterByName('toTables'));
     </script>
   </body>
 </html>

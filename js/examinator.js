@@ -75,6 +75,22 @@ Examinator.prototype.quickTestMode = function() {
     this.allowedAnswerTables = _.range(0, this.tables.length);
 };
 
+Examinator.prototype.generateModeFunction = function(tablesFrom, tablesTo) {
+    var obj = this;
+    return function() {
+        var convert = function(str) {
+            return _.map(str.split(""),
+                         function(char) {
+                             return parseInt(char);
+                         });
+        };
+
+        obj.allowedQuestionTables = convert(tablesFrom);
+        obj.allowedQuestionSymbols = _.range(0, obj.getSymbolsCount());
+        obj.allowedAnswerTables = convert(tablesTo);
+    }
+};
+
 Examinator.prototype.create2TablesMode = function(tableFrom, tableTo) {
     return function() {
         this.allowedQuestionTables = [tableFrom];
@@ -82,13 +98,6 @@ Examinator.prototype.create2TablesMode = function(tableFrom, tableTo) {
         this.allowedAnswerTables = [tableTo];
     }
 };
-
-Examinator.prototype.hiragana2romajiMode = Examinator.prototype.create2TablesMode(1, 0);
-Examinator.prototype.romaji2hiraganaMode = Examinator.prototype.create2TablesMode(0, 1);
-Examinator.prototype.katakana2romajiMode = Examinator.prototype.create2TablesMode(2, 0);
-Examinator.prototype.romaji2katakanaMode = Examinator.prototype.create2TablesMode(0, 2);
-Examinator.prototype.hiragana2katakanaMode = Examinator.prototype.create2TablesMode(1, 2);
-Examinator.prototype.katakana2hiraganaMode = Examinator.prototype.create2TablesMode(2, 1);
 
 Examinator.prototype.descartesMultiply = function(list1, list2) {
     return _.flatten(_.map(list1,
