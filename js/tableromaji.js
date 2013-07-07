@@ -14,7 +14,7 @@ TableRomaji.prototype.data = ["a", "i", "u", "e", "o",
                                 "ma", "mi", "mu", "me", "mo",
                                 "ya",       "yu",       "yo",
                                 "ra", "ri", "ru", "re", "ro",
-                                "wa",                   "wo"];;
+                                "wa",                   "wo"];
 
 TableRomaji.prototype.getSymbol = function(symbolNo) {
     return this.data[symbolNo];
