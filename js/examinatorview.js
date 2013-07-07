@@ -13,7 +13,7 @@ ExaminatorView.prototype.start = function(fromTables, toTables) {
 };
 
 ExaminatorView.prototype.clearAnswerButtons = function() {
-    $('#answers').empty();
+    $("#answers").empty();
 };
 
 ExaminatorView.prototype.addAnswerButtons = function(variants,
@@ -21,18 +21,18 @@ ExaminatorView.prototype.addAnswerButtons = function(variants,
     _.each(variants,
            function(variant) {
                $("<button class='answerbtn btn btn-primary btn-large'>" +
-                   variant.symbol + "</button>").appendTo('#answers')
-                   .data('symbolNo', variant.symbolNo)
-                   .data('tableNo', variant.tableNo)
-                   .data('symbol', variant.symbol);
+                   variant.symbol + "</button>").appendTo("#answers")
+                   .data("symbolNo", variant.symbolNo)
+                   .data("tableNo", variant.tableNo)
+                   .data("symbol", variant.symbol);
            });
 
     quickTestObject = this;
 
-    $('.answerbtn').click(
+    $(".answerbtn").click(
         function(obj) {
             var btn = obj.target;
-            var symbolNo = $(btn).data('symbolNo');
+            var symbolNo = $(btn).data("symbolNo");
             if (symbolNo == ansSymbolNo) {
                 $(btn).addClass("btn-success");
                 window.setTimeout(
@@ -47,12 +47,21 @@ ExaminatorView.prototype.addAnswerButtons = function(variants,
         });
 };
 
-ExaminatorView.prototype.showQuestion = function(symbol) {
-    $('#question').text(symbol);
+ExaminatorView.prototype.clearQuestion = function() {
+    $("#question").empty();
+};
+
+ExaminatorView.prototype.showQuestion = function(html) {
+    $("#question").append(html);
 };
 
 ExaminatorView.prototype.askQuestion = function() {
+    this.clearQuestion();
+
     var ex = this.ex;
+    // TODO:
+    // Move all complex logic to the examinator.
+    // Leave only view-related stuff here.
     var question = ex.generateQuestion(ex.allowedQuestionTables,
                                        ex.allowedQuestionSymbols);
     var wrongAnswers = ex.generateWrongAnswers(
@@ -74,11 +83,11 @@ ExaminatorView.prototype.askQuestion = function() {
     variants = _.map(variants,
                      function(variant) {
                          variant.symbolNo = variant.b;
-                         variant.tableNo = variant.a;
-                         variant.symbol = ex.getSymbol(variant.tableNo, variant.symbolNo)
+                         variant.table = variant.a;
+                         variant.symbol = variant.table.getSymbol(variant.symbolNo);
                          return variant;
                      });
 
-    this.showQuestion(ex.getSymbol(question.a, question.b));
+    this.showQuestion(question.a.getHTMLCodeForDisplaying(question.b));
     this.addAnswerButtons(variants, question.b);
 };

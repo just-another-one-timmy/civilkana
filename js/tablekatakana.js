@@ -24,5 +24,9 @@ TableKatakana.prototype.getSymbolsCount = function() {
     return this.data.length;
 };
 
+TableKatakana.prototype.getHTMLCodeForDisplaying = function(symbolNo) {
+    return "<p>" + this.getSymbol(symbolNo) + "</p>";
+};
+
 // Don't know how to do it "the right way".
 Examinator.prototype.tables.push(new TableKatakana());

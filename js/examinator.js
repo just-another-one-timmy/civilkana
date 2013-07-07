@@ -55,9 +55,23 @@ Examinator.prototype.quickTestMode = function() {
 Examinator.prototype.generateModeFunction = function(tablesFrom, tablesTo) {
     var obj = this;
     return function() {
-        obj.allowedQuestionTables = tablesFrom.split(",");
+        // OMG I HATE JAVASCRIPT, IT CAN'T DO THAT:
+        // obj.allowedQuestionTables = _.map(tablesFrom.split(","), obj.getTableByTitle);
+        // SO INSTEAD I AM FORCED TO DO THIS: (!!!!!!!!!!!!) <--- RAGE RAGE RAGE RAGE RAGE
+        obj.allowedQuestionTables = _.map(tablesFrom.split(","),
+                                          // Ugly, UGLY javascript! :(
+                                          function(title) {
+                                              return obj.getTableByTitle(title);
+                                          });
+
+
         obj.allowedQuestionSymbols = _.range(0, obj.getSymbolsCount());
-        obj.allowedAnswerTables = tablesTo.split(",");
+
+        // Again, ugly piece of javascript...
+        obj.allowedAnswerTables = _.map(tablesTo.split(","),
+                                        function(title) {
+                                            return obj.getTableByTitle(title);
+                                        });
     }
 };
 
