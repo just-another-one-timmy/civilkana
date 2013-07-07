@@ -20,6 +20,7 @@ TableAudio.prototype.getAudioFileName = function(symbolNo) {
     // Obviously won't work offline....
     // I should find some free japanese audio to fix this.
     return "http://translate.google.com/translate_tts?ie=UTF-8&tl=ja&q=" +
+        // adding "ー" to make it sound longer.
         this.data[symbolNo] + "ー";
 };
 
@@ -28,7 +29,7 @@ TableAudio.prototype.getSymbolsCount = function() {
 };
 
 TableAudio.prototype.getHTMLCodeForDisplaying = function(symbolNo) {
-    return "<audio controls><source src='" + this.getAudioFileName(symbolNo) + "'/></audio>";
+    return "<audio autoplay controls><source src='" + this.getAudioFileName(symbolNo) + "'/></audio>";
 };
 
 // Don't know how to do it "the right way".
