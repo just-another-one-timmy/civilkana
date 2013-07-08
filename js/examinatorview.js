@@ -27,7 +27,7 @@ ExaminatorView.prototype.addAnswerButtons = function(variants,
                    .data("symbol", variant.symbol);
            });
 
-    quickTestObject = this;
+    examinatorView = this;
 
     $(".answerbtn").click(
         function(obj) {
@@ -37,10 +37,10 @@ ExaminatorView.prototype.addAnswerButtons = function(variants,
                 $(btn).addClass("btn-success");
                 _.delay(
                     function() {
-                        quickTestObject.clearAnswerButtons();
-                        quickTestObject.askQuestion();
+                        examinatorView.clearAnswerButtons();
+                        examinatorView.askQuestion();
                     },
-                    quickTestObject.DELAY_BEFORE_NEXT_GUESS);
+                    examinatorView.DELAY_BEFORE_NEXT_GUESS);
             } else {
                 $(btn).addClass("btn-danger");
             }
