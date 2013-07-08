@@ -35,7 +35,7 @@ ExaminatorView.prototype.addAnswerButtons = function(variants,
             var symbolNo = $(btn).data("symbolNo");
             if (symbolNo == ansSymbolNo) {
                 $(btn).addClass("btn-success");
-                window.setTimeout(
+                _.delay(
                     function() {
                         quickTestObject.clearAnswerButtons();
                         quickTestObject.askQuestion();
