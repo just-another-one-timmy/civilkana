@@ -58,7 +58,7 @@ Examinator.prototype.generateModeFunction = function(tablesFrom, tablesTo) {
         obj.allowedQuestionTables = _.map(tablesFrom.split(","), _.bind(obj.getTableByTitle, obj));
         obj.allowedQuestionSymbols = _.range(0, obj.getSymbolsCount());
         obj.allowedAnswerTables = _.map(tablesTo.split(","), _.bind(obj.getTableByTitle, obj));
-    }
+    };
 };
 
 Examinator.prototype.descartesMultiply = function(list1, list2) {
